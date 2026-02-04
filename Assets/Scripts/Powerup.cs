@@ -12,9 +12,6 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private AudioClip _clip;
    
-
-
-
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -22,7 +19,6 @@ public class Powerup : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)

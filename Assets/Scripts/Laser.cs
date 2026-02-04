@@ -19,13 +19,11 @@ public class Laser : MonoBehaviour
        {
            MoveDown();
        }
-
     }
 
     void MoveUp()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
-
         if (transform.position.y >= 8f)
         {
             if (transform.parent != null)
@@ -75,9 +73,7 @@ public class Laser : MonoBehaviour
             {
                 player.Damage();
             }
-
             Destroy(gameObject);
         }
     }
-
 }

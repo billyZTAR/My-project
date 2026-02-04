@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private float _speed = 5f;
     private float _speedMultiplier = 2;
     [SerializeField]
-    private GameObject _LaserPrefab;
+    private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     private SpawnManager _spawnManager;
     [SerializeField]
-    private GameObject _ShieldVisualizer;
+    private GameObject _shieldVisualizer;
     [SerializeField]
     private int _score;
     private UImanager _uiManager;
@@ -27,13 +27,10 @@ public class Player : MonoBehaviour
     private GameObject _rightEngine, _leftEngine;
     [SerializeField]
     private AudioSource _laserAudio;
-   
     private bool _tripleShot = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _canTakeDamage = true;
-
-
 
     void Start()
     {
@@ -41,7 +38,6 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UImanager>();
         _laserAudio = GetComponent<AudioSource>();
-
     }
 
     void Update()
@@ -53,6 +49,7 @@ public class Player : MonoBehaviour
         } 
        // Instantiate(_EnemyPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
     }
+
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -62,9 +59,7 @@ public class Player : MonoBehaviour
         //transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
         transform.Translate(direction * _speed * Time.deltaTime);
-
 
         if (transform.position.y >= 3.5f)
         {
@@ -84,21 +79,21 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(10, transform.position.y, 0);
         }
     }
+
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
-
         if (_tripleShot == true)
         {
             Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, -3.5f, 0), Quaternion.identity);
         }
         else
         {
-            Instantiate(_LaserPrefab, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
         }
         _laserAudio.Play();
-
     }
+
     public void Damage()
     {
         // Prevent instant multiple hits
@@ -110,13 +105,11 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _isShieldActive = false;
-            _ShieldVisualizer.SetActive(false);
+            _shieldVisualizer.SetActive(false);
             StartCoroutine(DamageCooldown());
             return;
         }
-
         _lives--;
-
         if (_lives < 0)
             _lives = 0;
 
@@ -137,10 +130,8 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
         StartCoroutine(DamageCooldown());
     }
-
 
     public void TripleSHotActive()
     {
@@ -174,7 +165,7 @@ public class Player : MonoBehaviour
     public void ShieldActive()
     {
         _isShieldActive = true;
-        _ShieldVisualizer.SetActive(true);
+        _shieldVisualizer.SetActive(true);
     }
 
     public void AddScore(int points)
@@ -183,10 +174,10 @@ public class Player : MonoBehaviour
         _uiManager.UpdateScore(_score);
 
     }
+
     IEnumerator DamageCooldown()
     {
         yield return new WaitForSeconds(0.6f); 
         _canTakeDamage = true;
     }
-
 }

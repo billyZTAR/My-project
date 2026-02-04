@@ -7,7 +7,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private float _rotationSpeed = 15.0f;
     [SerializeField]
-    private GameObject _ExplosionPrefab;
+    private GameObject _explosionPrefab;
     private SpawnManager _spawnManager;
 
     private void Start()
@@ -24,11 +24,10 @@ public class Asteroid : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
-            Instantiate(_ExplosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.2f);
-        }
-        
+        }       
     }
 }
